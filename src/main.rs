@@ -1,6 +1,19 @@
 use rand::Rng;
-use std::io;
 use std::cmp::Ordering;
+use std::io;
+
+// Implementation of the first_word function from Chapter 4 of the Rust book
+fn first_word(s: &str) -> &str {
+    println!("The string is: {}", s);
+    let bytes = s.as_bytes();
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+
+    return &s[..];
+}
 
 // Implementation of the guessing game from Chapter 2 of the Rust book
 fn guessing_game() {
@@ -21,7 +34,7 @@ fn guessing_game() {
             Err(_) => {
                 println!("Invalid input.");
                 continue;
-            }, 
+            }
         };
 
         println!("You guessed: {}", guess);
@@ -40,7 +53,8 @@ fn guessing_game() {
 fn main() {
     println!("Which function would you like to run?");
     println!("1. Guessing Game");
-    println!("2. Exit");
+    println!("2. First Word");
+    println!("3. Exit");
 
     let mut choice = String::new();
     io::stdin()
@@ -51,7 +65,12 @@ fn main() {
 
     match choice {
         1 => guessing_game(),
-        2 => std::process::exit(0),
+        2 => {
+            let s = String::from("Hello, World!");
+            let word = first_word(&s);
+            println!("The first word is: {}", word);
+        },
+        3 => std::process::exit(0),
         _ => println!("Invalid Choice"),
     }
 }
